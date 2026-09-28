@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import Navbar from "./Components/Navbar";
 import About from "./Components/About";
 import ExperienceSection from "./Components/ExperienceSection";
@@ -8,31 +9,39 @@ import PremiumNetwork from "./Components/PremiumNetwork";
 import Secure from "./Components/Secure";
 import ElevateExperience from "./Components/ElevateExperience";
 import Footer from "./Components/Footer";
+
+
 import Navbar2 from "./Skincare/Navbar2";
 import GroomingCards from "./Skincare/GroomingCards";
 import FacialServices from "./Skincare/FacialServices";
 import Footer2 from "./Skincare/Footer2";
+
+
 import ClinicNavbar from "./Vanguard Grooming/ClinicNavbar";
 import Lumina from "./Vanguard Grooming/Lumina";
 import Available from "./Vanguard Grooming/Available";
 import Custom from "./Vanguard Grooming/Custom";
 import Buttons from "./Vanguard Grooming/Buttons";
 import Footer3 from "./Vanguard Grooming/Footer3";
+
 type Page = "home" | "skincare" | "clinic";
 
 function App() {
   const [page, setPage] = useState<Page>("home");
+
   const [selectedGrooming, setSelectedGrooming] = useState<any>(null);
   const [showAvailable, setShowAvailable] = useState(false);
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname;
       const state = window.history.state;
+
       if (path === "/") {
         setPage("home");
         setShowAvailable(false);
         setSelectedGrooming(null);
       }
+
       else if (path === "/skincare") {
         setPage("skincare");
         setShowAvailable(false);
@@ -42,10 +51,12 @@ function App() {
       else if (path === "/clinic") {
         setPage("clinic");
         setShowAvailable(false);
+
         if (state?.selectedGrooming) {
           setSelectedGrooming(state.selectedGrooming);
         }
       }
+
       else {
         setPage("home");
         setShowAvailable(false);
@@ -57,11 +68,13 @@ function App() {
           "/"
         );
       }
+
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
     };
+
     handlePopState();
     window.addEventListener("popstate", handlePopState);
     return () => {
@@ -87,6 +100,7 @@ function App() {
       behavior: "smooth",
     });
   };
+
   const openSkincarePage = () => {
     setPage("skincare");
     setShowAvailable(false);
@@ -103,6 +117,9 @@ function App() {
       behavior: "smooth",
     });
   };
+
+
+
   const openClinicPage = (card: any) => {
     setSelectedGrooming(card);
     setPage("clinic");
@@ -122,6 +139,9 @@ function App() {
       behavior: "smooth",
     });
   };
+
+
+
   const handleBookNow = () => {
     setShowAvailable(true);
     setTimeout(() => {
@@ -135,9 +155,12 @@ function App() {
       }
     }, 100);
   };
+
+
   return (
-    <div className="flex min-h-screen w-full flex-co">
+    <div className="flex min-h-screen w-full flex-col ">
       <div className="mx-auto w-full max-w-[1400px]">
+
         {page === "home" && (
           <>
             <Navbar open={openHomePage} />
@@ -188,8 +211,6 @@ function App() {
             <Lumina
               selectedGrooming={selectedGrooming}
             />
-
-            {/* AVAILABLE SECTION */}
             {showAvailable && (
               <div id="available-section">
                 <Available />
