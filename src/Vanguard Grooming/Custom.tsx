@@ -1,6 +1,6 @@
 
-import irene from "../assets/Vanguard Grooming/irene.png";
-import jonas from "../assets/Vanguard Grooming/jonas.png";
+import irene from "../assets/Vanguard grooming/irene.png";
+import jonas from "../assets/Vanguard grooming/jonas.png";
 const Custom = () => {
   return (
     <section className="px-4 pb-20 pt-10 sm:px-8 md:px-12">

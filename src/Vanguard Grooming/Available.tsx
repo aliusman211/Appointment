@@ -1,9 +1,9 @@
 import React from "react";
 
-import facialMain from "../assets/Vanguard Grooming/facial-main.png";
-import facialRoom from "../assets/Vanguard Grooming/facial-room.png";
-import facialMassage from "../assets/Vanguard Grooming/facial-massage.png";
-import facialTreatment from "../assets/Vanguard Grooming/facial-treatment.png";
+import facialMain from "../assets/Vanguard grooming/facial-main.png";
+import facialRoom from "../assets/Vanguard grooming/facial-room.png";
+import facialMassage from "../assets/Vanguard grooming/facial-massage.png";
+import facialTreatment from "../assets/Vanguard grooming/facial-treatment.png";
 
 const services = [
   {
