@@ -1,4 +1,4 @@
-import React from "react";
+
 import irene from "../assets/Vanguard Grooming/irene.png";
 import jonas from "../assets/Vanguard Grooming/jonas.png";
 const Custom = () => {

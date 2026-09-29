@@ -1,5 +1,4 @@
-
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import clinicImage from "../assets/Vanguard grooming/clinic.png";
 
 interface ClinicNavbarProps {
@@ -16,6 +15,8 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
     };
 
     window.addEventListener("scroll", handleScroll);
+
+    // Check initial scroll position
     handleScroll();
 
     return () => {
@@ -24,44 +25,45 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
   }, []);
 
   return (
-  <nav
+    <nav
       className={`
         fixed
-        top-[4px]
         left-1/2
+        top-[4px]
+        z-[9999]
         -translate-x-1/2
-        z-50
 
         flex
+        min-h-[54px]
+        w-[calc(100%-24px)]
         items-center
         justify-between
 
-        w-[calc(100%-24px)]
-        min-h-[54px]
-        px-3
         rounded-[8px]
-
-        sm:w-[calc(100%-32px)]
-        sm:min-h-[58px]
-        sm:px-4
-
-        md:w-[90%]
-        md:min-h-[60px]
-        md:px-5
-
-        lg:w-[88%]
-        lg:min-h-[64px]
-        lg:px-6
-
-        xl:w-[1200px]
-        xl:min-h-[66px]
-        xl:px-6
-
         border
         border-white/20
+
+        px-3
+
         shadow-lg
         transition-all
         duration-300
+
+        sm:min-h-[58px]
+        sm:w-[calc(100%-32px)]
+        sm:px-4
+
+        md:min-h-[60px]
+        md:w-[90%]
+        md:px-5
+
+        lg:min-h-[64px]
+        lg:w-[88%]
+        lg:px-6
+
+        xl:min-h-[66px]
+        xl:w-[1200px]
+        xl:px-6
 
         ${
           isScrolled
@@ -70,7 +72,7 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
         }
       `}
     >
-      {/* LEFT SIDE */}
+      {/* ================= LEFT SIDE ================= */}
       <div
         className="
           flex
@@ -84,31 +86,45 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
         "
       >
         {/* LOGO */}
-        <img
-          src={clinicImage}
-          alt="Lumina Dermal Lab"
+        <button
+          type="button"
+          onClick={open}
+          aria-label="Open clinic"
           className="
-            h-[36px]
-            w-[36px]
             shrink-0
+            cursor-pointer
             rounded-full
-            border
-            border-white/70
-            object-cover
-
-            sm:h-[42px]
-            sm:w-[42px]
-
-            md:h-[46px]
-            md:w-[46px]
-
-            lg:h-[50px]
-            lg:w-[50px]
+            focus:outline-none
+            focus:ring-2
+            focus:ring-white/50
           "
-        />
+        >
+          <img
+            src={clinicImage}
+            alt="Lumina Dermal Lab"
+            className="
+              h-[36px]
+              w-[36px]
+              rounded-full
+              border
+              border-white/70
+              object-cover
+
+              sm:h-[42px]
+              sm:w-[42px]
+
+              md:h-[46px]
+              md:w-[46px]
+
+              lg:h-[50px]
+              lg:w-[50px]
+            "
+          />
+        </button>
 
         {/* TITLE + DESCRIPTION */}
         <div className="min-w-0 flex-1">
+          {/* Clinic Name */}
           <h2
             className="
               truncate
@@ -128,6 +144,7 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
             Lumina Dermal Lab
           </h2>
 
+          {/* Description */}
           <p
             className="
               mt-[2px]
@@ -153,7 +170,7 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
         </div>
       </div>
 
-      {/* BOOK NOW BUTTON */}
+      {/* ================= BOOK NOW ================= */}
       <button
         type="button"
         onClick={onBookNow}
@@ -174,22 +191,22 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
           hover:bg-gray-200
           active:scale-95
 
-          /* MOBILE */
+          focus:outline-none
+          focus:ring-2
+          focus:ring-white/50
+
           h-[30px]
           w-[68px]
           text-[8px]
 
-          /* SMALL MOBILE */
           sm:h-[33px]
           sm:w-[78px]
           sm:text-[10px]
 
-          /* TABLET */
           md:h-[36px]
           md:w-[90px]
           md:text-[12px]
 
-          /* DESKTOP */
           lg:h-[40px]
           lg:w-[105px]
           lg:text-[14px]
@@ -202,4 +219,3 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
 }
 
 export default ClinicNavbar;
-

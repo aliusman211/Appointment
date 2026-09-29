@@ -1,5 +1,7 @@
+
 import { useEffect, useState } from "react";
 
+// Home Components
 import Navbar from "./Components/Navbar";
 import About from "./Components/About";
 import ExperienceSection from "./Components/ExperienceSection";
@@ -10,13 +12,13 @@ import Secure from "./Components/Secure";
 import ElevateExperience from "./Components/ElevateExperience";
 import Footer from "./Components/Footer";
 
-
+// Skincare Components
 import Navbar2 from "./Skincare/Navbar2";
 import GroomingCards from "./Skincare/GroomingCards";
 import FacialServices from "./Skincare/FacialServices";
 import Footer2 from "./Skincare/Footer2";
 
-
+// Vanguard Grooming Components
 import ClinicNavbar from "./Vanguard Grooming/ClinicNavbar";
 import Lumina from "./Vanguard Grooming/Lumina";
 import Available from "./Vanguard Grooming/Available";
@@ -29,8 +31,12 @@ type Page = "home" | "skincare" | "clinic";
 function App() {
   const [page, setPage] = useState<Page>("home");
 
-  const [selectedGrooming, setSelectedGrooming] = useState<any>(null);
+  const [selectedGrooming, setSelectedGrooming] =
+    useState<any>(null);
+
   const [showAvailable, setShowAvailable] = useState(false);
+
+  // Handle browser Back and Forward buttons
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname;
@@ -40,24 +46,18 @@ function App() {
         setPage("home");
         setShowAvailable(false);
         setSelectedGrooming(null);
-      }
-
-      else if (path === "/skincare") {
+      } else if (path === "/skincare") {
         setPage("skincare");
         setShowAvailable(false);
         setSelectedGrooming(null);
-      }
-
-      else if (path === "/clinic") {
+      } else if (path === "/clinic") {
         setPage("clinic");
         setShowAvailable(false);
 
         if (state?.selectedGrooming) {
           setSelectedGrooming(state.selectedGrooming);
         }
-      }
-
-      else {
+      } else {
         setPage("home");
         setShowAvailable(false);
         setSelectedGrooming(null);
@@ -75,8 +75,12 @@ function App() {
       });
     };
 
+    // Handle initial page load
     handlePopState();
+
+    // Listen for browser navigation
     window.addEventListener("popstate", handlePopState);
+
     return () => {
       window.removeEventListener(
         "popstate",
@@ -84,6 +88,8 @@ function App() {
       );
     };
   }, []);
+
+  // Open Home Page
   const openHomePage = () => {
     setPage("home");
     setShowAvailable(false);
@@ -101,6 +107,7 @@ function App() {
     });
   };
 
+  // Open Skincare Page
   const openSkincarePage = () => {
     setPage("skincare");
     setShowAvailable(false);
@@ -118,8 +125,7 @@ function App() {
     });
   };
 
-
-
+  // Open Clinic Page
   const openClinicPage = (card: any) => {
     setSelectedGrooming(card);
     setPage("clinic");
@@ -140,10 +146,10 @@ function App() {
     });
   };
 
-
-
+  // Book Now Button
   const handleBookNow = () => {
     setShowAvailable(true);
+
     setTimeout(() => {
       const availableSection =
         document.getElementById("available-section");
@@ -156,11 +162,11 @@ function App() {
     }, 100);
   };
 
-
   return (
-    <div className="flex min-h-screen w-full flex-col ">
+    <div className="flex min-h-screen w-full flex-col">
       <div className="mx-auto w-full max-w-[1400px]">
 
+        {/* HOME PAGE */}
         {page === "home" && (
           <>
             <Navbar open={openHomePage} />
@@ -185,11 +191,10 @@ function App() {
           </>
         )}
 
+        {/* SKINCARE PAGE */}
         {page === "skincare" && (
           <>
-            <Navbar2
-              open={openHomePage}
-            />
+            <Navbar2 open={openHomePage} />
 
             <GroomingCards
               openClinicPage={openClinicPage}
@@ -201,6 +206,7 @@ function App() {
           </>
         )}
 
+        {/* CLINIC PAGE */}
         {page === "clinic" && (
           <>
             <ClinicNavbar
@@ -211,6 +217,7 @@ function App() {
             <Lumina
               selectedGrooming={selectedGrooming}
             />
+
             {showAvailable && (
               <div id="available-section">
                 <Available />

@@ -1,4 +1,4 @@
-import React from "react";
+
 const paymentFeatures = [
   {
     image: "/Group%2083.png",
