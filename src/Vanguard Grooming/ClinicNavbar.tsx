@@ -184,7 +184,7 @@ function ClinicNavbar({ open, onBookNow }: ClinicNavbarProps) {
           bg-white
           font-semibold
           text-black
-
+          cursor-pointer
           transition-all
           duration-200
 

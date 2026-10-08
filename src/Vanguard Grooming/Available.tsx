@@ -5,7 +5,19 @@ import facialRoom from "../assets/Vanguard grooming/facial-room.png";
 import facialMassage from "../assets/Vanguard grooming/facial-massage.png";
 import facialTreatment from "../assets/Vanguard grooming/facial-treatment.png";
 
-const services = [
+interface Service {
+  id: number;
+  title: string;
+  description: string;
+  price: string;
+  time: string;
+}
+
+interface AvailableProps {
+  onBook: (service: Service) => void;
+}
+
+const services: Service[] = [
   {
     id: 1,
     title: "HydraGlow Facial",
@@ -56,193 +68,188 @@ const services = [
   },
 ];
 
-function Available() {
+function Available({ onBook }: AvailableProps) {
   return (
-   <main className="min-h-screen w-full bg-white text-white">
-  <section
-    className="
-      px-4
-      pb-16
-      pt-[100px]
-      sm:px-5
-      sm:pb-20
-      md:px-8
-      lg:px-12
-      lg:pt-[115px]
-      xl:px-20
-    "
-  >
-    {/* =========================
-        HEADING
-    ========================== */}
-    <div className="mb-8">
-      <h1
+    <main className="min-h-screen w-full bg-white text-white">
+      <section
+        id="available-section"
         className="
-          text-[28px]
-          font-bold
-          leading-tight
-          text-[#000000]
-          sm:text-[32px]
-          md:text-[34px]
+          px-4
+          pb-16
+          pt-[100px]
+          sm:px-5
+          sm:pb-20
+          md:px-8
+          lg:px-12
+          lg:pt-[115px]
+          xl:px-20
         "
       >
-        Available Experiences
-      </h1>
+        {/* Heading */}
+        <div className="mb-8">
+          <h1
+            className="
+              text-[28px]
+              font-bold
+              leading-tight
+              text-[#000000]
+              sm:text-[32px]
+              md:text-[34px]
+            "
+          >
+            Available Experiences
+          </h1>
 
-      <p
-        className="
-          mt-1
-          text-[15px]
-          text-[#484848]
-          sm:text-[16px]
-          md:text-[17px]
-        "
-      >
-        Precision aesthetics, Refined clinical care
-      </p>
-    </div>
+          <p
+            className="
+              mt-1
+              text-[15px]
+              text-[#484848]
+              sm:text-[16px]
+              md:text-[17px]
+            "
+          >
+            Precision aesthetics, Refined clinical care
+          </p>
+        </div>
 
-    {/* =========================
-        MAIN CONTENT
-    ========================== */}
-    <div
-      className="
-        mt-5
-        grid
-        grid-cols-1
-        gap-8
-        lg:grid-cols-[minmax(400px,530px)_minmax(400px,1fr)]
-        lg:gap-8
-        xl:grid-cols-[530px_minmax(500px,1fr)]
-        xl:gap-10
-        2xl:grid-cols-[550px_minmax(600px,1fr)]
-      "
-    >
-      {/* =========================
-          SERVICES
-      ========================== */}
-      <div className="flex w-full flex-col gap-2">
-        {services.map((service, index) => (
-          <React.Fragment key={service.id}>
-            {/* SERVICE CARD */}
-            <div
-              className="
-                flex
-                min-h-[100px]
-                w-full
-                items-center
-                rounded-[8px]
-                bg-[#F6FCFF]
-                px-4
-                py-4
-                text-black
-                shadow-[0_0_4px_rgba(0,0,0,0.12)]
-                sm:px-5
-              "
-            >
-              {/* LEFT CONTENT */}
-              <div className="min-w-0 flex-1 pr-3">
-                <h2
+        {/* Main Content */}
+        <div
+          className="
+            mt-5
+            grid
+            grid-cols-1
+            gap-8
+            lg:grid-cols-[minmax(400px,530px)_minmax(400px,1fr)]
+            lg:gap-8
+            xl:grid-cols-[530px_minmax(500px,1fr)]
+            xl:gap-10
+            2xl:grid-cols-[550px_minmax(600px,1fr)]
+          "
+        >
+          {/* Services */}
+          <div className="flex w-full flex-col gap-2">
+            {services.map((service, index) => (
+              <React.Fragment key={service.id}>
+                <div
                   className="
-                    text-[17px]
-                    font-bold
-                    leading-tight
-                    text-[#000000]
-                    sm:text-[18px]
-                    md:text-[20px]
-                  "
-                >
-                  {service.title}
-                </h2>
-
-                <p
-                  className="
-                    mt-2
-                    max-w-[360px]
-                    text-[12px]
-                    leading-5
-                    text-[#484848]
-                    sm:mt-3
-                    sm:text-[13px]
-                    md:text-[14px]
-                  "
-                >
-                  {service.description}
-                </p>
-              </div>
-
-              {/* PRICE + BOOK */}
-              <div
-                className="
-                  flex
-                  w-[68px]
-                  shrink-0
-                  flex-col
-                  items-end
-                  sm:w-[75px]
-                "
-              >
-                <span
-                  className="
-                    text-[16px]
-                    font-bold
-                    leading-none
-                    text-[#000000]
-                    sm:text-[18px]
-                  "
-                >
-                  {service.price}
-                </span>
-
-                <span
-                  className="
-                    mt-1
-                    text-[12px]
-                    leading-none
-                    text-[#484848]
-                    sm:text-[14px]
-                  "
-                >
-                  {service.time}
-                </span>
-
-                <button
-                  type="button"
-                  className="
-                    mt-2
                     flex
-                    h-[27px]
-                    w-[62px]
+                    min-h-[100px]
+                    w-full
                     items-center
-                    justify-center
-                    rounded-full
-                    bg-[#202020]
-                    text-[12px]
-                    text-white
-                    transition
-                    duration-200
-                    hover:bg-black
-                    sm:w-[65px]
-                    sm:text-[13px]
+                    rounded-[8px]
+                    bg-[#F6FCFF]
+                    px-4
+                    py-4
+                    text-black
+                    shadow-[0_0_4px_rgba(0,0,0,0.12)]
+                    sm:px-5
                   "
                 >
-                  Book
-                </button>
-              </div>
-            </div>
+                  {/* Service Information */}
+                  <div className="min-w-0 flex-1 pr-3">
+                    <h2
+                      className="
+                        text-[17px]
+                        font-bold
+                        leading-tight
+                        text-[#000000]
+                        sm:text-[18px]
+                        md:text-[20px]
+                      "
+                    >
+                      {service.title}
+                    </h2>
 
-            {/* DIVIDER */}
-            {index < services.length - 1 && (
-              <div className="flex w-full">
-                <div className="h-[1px] w-full bg-[#DFDFDF]" />
-              </div>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
+                    <p
+                      className="
+                        mt-2
+                        max-w-[360px]
+                        text-[12px]
+                        leading-5
+                        text-[#484848]
+                        sm:mt-3
+                        sm:text-[13px]
+                        md:text-[14px]
+                      "
+                    >
+                      {service.description}
+                    </p>
+                  </div>
 
+                  {/* Price + Book */}
+                  <div
+                    className="
+                      flex
+                      w-[68px]
+                      shrink-0
+                      flex-col
+                      items-end
+                      sm:w-[75px]
+                    "
+                  >
+                    <span
+                      className="
+                        text-[16px]
+                        font-bold
+                        leading-none
+                        text-[#000000]
+                        sm:text-[18px]
+                      "
+                    >
+                      {service.price}
+                    </span>
 
-     <div
+                    <span
+                      className="
+                        mt-1
+                        text-[12px]
+                        leading-none
+                        text-[#484848]
+                        sm:text-[14px]
+                      "
+                    >
+                      {service.time}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={() => onBook(service)}
+                      className="
+                        mt-2
+                        flex
+                        h-[27px]
+                        w-[62px]
+                        cursor-pointer
+                        items-center
+                        justify-center
+                        rounded-full
+                        bg-[#202020]
+                        text-[12px]
+                        text-white
+                        transition
+                        hover:bg-black
+                        sm:w-[65px]
+                        sm:text-[13px]
+                      "
+                    >
+                      Book
+                    </button>
+                  </div>
+                </div>
+
+                {/* Divider */}
+                {index < services.length - 1 && (
+                  <div className="flex w-full">
+                    <div className="h-[1px] w-full bg-[#DFDFDF]" />
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Images */}
+          <div
             className="
               hidden
               gap-2
@@ -250,7 +257,7 @@ function Available() {
               lg:grid-cols-[230px_1fr]
             "
           >
-            {/* LARGE LEFT IMAGE */}
+            {/* Main Image */}
             <div
               className="
                 h-[450px]
@@ -262,17 +269,12 @@ function Available() {
               <img
                 src={facialMain}
                 alt="Facial treatment"
-                className="
-                  h-full
-                  w-full
-                  object-cover
-                "
+                className="h-full w-full object-cover"
               />
             </div>
 
-            {/* RIGHT IMAGES */}
+            {/* Right Images */}
             <div className="flex flex-col gap-2">
-              {/* TOP IMAGE */}
               <div
                 className="
                   h-[220px]
@@ -284,15 +286,10 @@ function Available() {
                 <img
                   src={facialRoom}
                   alt="Facial treatment room"
-                  className="
-                    h-full
-                    w-full
-                    object-cover
-                  "
+                  className="h-full w-full object-cover"
                 />
               </div>
 
-              {/* MIDDLE IMAGE */}
               <div
                 className="
                   h-[220px]
@@ -304,15 +301,10 @@ function Available() {
                 <img
                   src={facialMassage}
                   alt="Facial massage"
-                  className="
-                    h-full
-                    w-full
-                    object-cover
-                  "
+                  className="h-full w-full object-cover"
                 />
               </div>
 
-              {/* BOTTOM IMAGE */}
               <div
                 className="
                   h-[220px]
@@ -325,18 +317,14 @@ function Available() {
                 <img
                   src={facialTreatment}
                   alt="Facial treatment"
-                  className="
-                    h-full
-                    w-full
-                    object-cover
-                  "
+                  className="h-full w-full object-cover"
                 />
               </div>
             </div>
           </div>
-    </div>
-  </section>
-</main>
+        </div>
+      </section>
+    </main>
   );
 }
 
