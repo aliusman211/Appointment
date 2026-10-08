@@ -6,8 +6,8 @@ import {
   FiX,
 } from "react-icons/fi";
 
-import Calendericon from "../assets/Bookingimage/Calendericon.png";
-import clinicImage from "../assets/Bookingimage/clinic.png";
+import calendericon from "../assets/Bookingimage/calendericon.png";
+import clinic from "../assets/Bookingimage/clinic.png";
 
 // =====================================================
 // SERVICE TYPE
@@ -243,7 +243,7 @@ function BookingModal({
             "
           >
             <img
-              src={clinicImage}
+              src={clinic}
               alt="Clinic Logo"
               className="h-full w-full object-cover"
             />
@@ -273,7 +273,7 @@ function BookingModal({
         >
           <img
             className="h-[20px] w-[20px]"
-            src={Calendericon}
+            src={calendericon}
             alt="Calendar"
           />
 
