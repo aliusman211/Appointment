@@ -1,4 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentProps,
+  type ComponentType,
+} from "react";
+
+// =====================================================
+// HOME
+// =====================================================
 import Navbar from "./Components/Navbar";
 import About from "./Components/About";
 import ExperienceSection from "./Components/ExperienceSection";
@@ -8,33 +19,46 @@ import PremiumNetwork from "./Components/PremiumNetwork";
 import Secure from "./Components/Secure";
 import ElevateExperience from "./Components/ElevateExperience";
 import Footer from "./Components/Footer";
+
+// =====================================================
+// SKINCARE
+// =====================================================
 import Navbar2 from "./Skincare/Navbar2";
 import GroomingCards from "./Skincare/GroomingCards";
 import FacialServices from "./Skincare/FacialServices";
 import Footer2 from "./Skincare/Footer2";
+
+// =====================================================
+// CLINIC
+// =====================================================
 import ClinicNavbar from "./Vanguard Grooming/ClinicNavbar";
 import Lumina from "./Vanguard Grooming/Lumina";
 import Available from "./Vanguard Grooming/Available";
 import Custom from "./Vanguard Grooming/Custom";
 import Buttons from "./Vanguard Grooming/Buttons";
 import Footer3 from "./Vanguard Grooming/Footer3";
+
+// =====================================================
+// BOOKING
+// =====================================================
 import BookingModal from "./Booking/BookingModal";
 import DatePickerModal from "./DateClender/DatePickerModal";
 import BookingDetailsModel from "./BookingDetails/BookingDetailsModel";
+
+// =====================================================
+// ACCOUNT / AUTH
+// =====================================================
 import CreateAccount from "./AccountDetails/CreateAccount";
-
-
 import AuthCard from "./login/Authcard";
 import Welcome from "./smarter/welcome";
-import AccountDatacreating from "./DataAccount/AccountDatacreating";
+import AccountDataCreating from "./DataAccount/AccountDatacreating";
 import Magnat from "./Forgot/Magnat";
-
-
 import Verify from "./timeopt/Verify";
-
 import Congratulations from "./NewCongratulations/Congratulations";
 
-
+// =====================================================
+// PAGE TYPE
+// =====================================================
 type Page =
   | "home"
   | "skincare"
@@ -50,39 +74,55 @@ type Page =
   | "verifyAccount"
   | "congratulations";
 
+// =====================================================
+// USE COMPONENT TYPES DIRECTLY
+// =====================================================
 
-interface Service {
-  id: number;
-  title: string;
-  description: string;
-  price: string;
-  time: string;
-}
+// Exact GroomingCard type used by GroomingCards
+type GroomingCard = Parameters<
+  NonNullable<
+    ComponentProps<typeof GroomingCards>["openClinicPage"]
+  >
+>[0];
 
-interface BookingData {
-  service: Service;
-  day: string;
-  period: string;
-  time: string;
-}
+// Exact Service type used by Available
+type Service = Parameters<
+  NonNullable<
+    ComponentProps<typeof Available>["onBook"]
+  >
+>[0];
 
-interface BookingDetails {
-  service: Service;
-  day: string;
-  period: string;
-  time: string;
-  selectedDate: string;
-}
-interface GroomingCard {
-  id?: number;
-  title?: string;
-  name?: string;
-  description?: string;
-  image?: string;
-  [key: string]: unknown;
-}
+// Exact BookingData type used by BookingModal
+type BookingData = Parameters<
+  NonNullable<
+    ComponentProps<typeof BookingModal>["onContinue"]
+  >
+>[0];
 
+// BookingDetails type
+type BookingDetails = Parameters<
+  NonNullable<
+    ComponentProps<typeof DatePickerModal>["onConfirm"]
+  >
+>[0];
+
+// =====================================================
+// ACCOUNT DATA CREATING
+// =====================================================
+type AccountDataCreatingProps = {
+  onBack: () => void;
+};
+
+const AccountDataCreatingWithBack =
+  AccountDataCreating as ComponentType<AccountDataCreatingProps>;
+
+// =====================================================
+// APP
+// =====================================================
 export default function App() {
+  // ===================================================
+  // STATE
+  // ===================================================
   const [page, setPage] = useState<Page>("home");
 
   const [selectedGrooming, setSelectedGrooming] =
@@ -99,8 +139,13 @@ export default function App() {
 
   const [bookingDetails, setBookingDetails] =
     useState<BookingDetails | null>(null);
+
   const availableSectionRef =
     useRef<HTMLDivElement | null>(null);
+
+  // ===================================================
+  // RESET BOOKING
+  // ===================================================
   const resetBookingData = () => {
     setSelectedGrooming(null);
     setShowAvailable(false);
@@ -109,13 +154,15 @@ export default function App() {
     setBookingDetails(null);
   };
 
+  // ===================================================
+  // BROWSER BACK / REFRESH
+  // ===================================================
   useEffect(() => {
     const handlePopState = () => {
+      const state = window.history.state || {};
       const pathname = window.location.pathname;
-      const state = window.history.state;
 
       switch (pathname) {
-      
         case "/":
           setPage("home");
           resetBookingData();
@@ -129,82 +176,78 @@ export default function App() {
         case "/clinic":
           setPage("clinic");
 
-          if (state?.selectedGrooming) {
+          if (state.selectedGrooming) {
             setSelectedGrooming(
-              state.selectedGrooming
+              state.selectedGrooming as GroomingCard
             );
           }
-
           break;
 
         case "/booking":
           setPage("booking");
 
-          if (state?.selectedService) {
+          if (state.selectedService) {
             setSelectedService(
-              state.selectedService
+              state.selectedService as Service
             );
           }
-
           break;
 
         case "/datepicker":
           setPage("datepicker");
 
-          if (state?.selectedService) {
+          if (state.selectedService) {
             setSelectedService(
-              state.selectedService
+              state.selectedService as Service
             );
           }
 
-          if (state?.bookingData) {
+          if (state.bookingData) {
             setBookingData(
-              state.bookingData
+              state.bookingData as BookingData
             );
           }
-
           break;
+
         case "/booking-details":
           setPage("bookingDetails");
 
-          if (state?.bookingDetails) {
+          if (state.bookingDetails) {
             setBookingDetails(
-              state.bookingDetails
+              state.bookingDetails as BookingDetails
             );
           }
-
           break;
 
         case "/create-account":
           setPage("createAccount");
 
-          if (state?.bookingDetails) {
+          if (state.bookingDetails) {
             setBookingDetails(
-              state.bookingDetails
+              state.bookingDetails as BookingDetails
             );
           }
-
           break;
+
         case "/auth-card":
         case "/AuthCard":
           setPage("AuthCard");
 
-          if (state?.bookingDetails) {
+          if (state.bookingDetails) {
             setBookingDetails(
-              state.bookingDetails
+              state.bookingDetails as BookingDetails
             );
           }
-
           break;
 
         case "/welcome":
           setPage("welcome");
           break;
+
         case "/account-data-creating":
           setPage("accountDataCreating");
           break;
 
-      
         case "/forgot-password":
           setPage("forgotPassword");
           break;
@@ -218,18 +261,17 @@ export default function App() {
           break;
 
         default:
-          setPage("home");
-          resetBookingData();
-
           window.history.replaceState(
             { page: "home" },
             "",
             "/"
           );
 
-          break;
+          setPage("home");
+          resetBookingData();
       }
     };
+
     handlePopState();
 
     window.addEventListener(
@@ -244,6 +286,10 @@ export default function App() {
       );
     };
   }, []);
+
+  // ===================================================
+  // HOME
+  // ===================================================
   const openHomePage = () => {
     window.history.pushState(
       { page: "home" },
@@ -254,6 +300,10 @@ export default function App() {
     setPage("home");
     resetBookingData();
   };
+
+  // ===================================================
+  // SKINCARE
+  // ===================================================
   const openSkincarePage = () => {
     window.history.pushState(
       { page: "skincare" },
@@ -265,9 +315,10 @@ export default function App() {
     resetBookingData();
   };
 
-  const openClinicPage = (
-    card: GroomingCard
-  ) => {
+  // ===================================================
+  // CLINIC
+  // ===================================================
+  const openClinicPage = (card: GroomingCard) => {
     window.history.pushState(
       {
         page: "clinic",
@@ -282,28 +333,17 @@ export default function App() {
     setPage("clinic");
   };
 
+  // ===================================================
+  // BOOK NOW
+  // ===================================================
   const handleBookNow = () => {
     setShowAvailable(true);
   };
 
-  useEffect(() => {
-    if (
-      page === "clinic" &&
-      showAvailable &&
-      availableSectionRef.current
-    ) {
-      setTimeout(() => {
-        availableSectionRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }, 100);
-    }
-  }, [page, showAvailable]);
-
-  const handleServiceBook = (
-    service: Service
-  ) => {
+  // ===================================================
+  // SERVICE BOOK
+  // ===================================================
+  const handleServiceBook = (service: Service) => {
     window.history.pushState(
       {
         page: "booking",
@@ -317,6 +357,9 @@ export default function App() {
     setPage("booking");
   };
 
+  // ===================================================
+  // BOOKING CONTINUE
+  // ===================================================
   const handleBookingContinue = (
     data: BookingData
   ) => {
@@ -335,7 +378,9 @@ export default function App() {
     setPage("datepicker");
   };
 
-
+  // ===================================================
+  // DATE PICKER CONFIRM
+  // ===================================================
   const handleDatePickerConfirm = (
     finalSelection: BookingDetails
   ) => {
@@ -352,7 +397,9 @@ export default function App() {
     setPage("bookingDetails");
   };
 
-
+  // ===================================================
+  // BOOKING DETAILS CONFIRM
+  // ===================================================
   const handleBookingDetailsConfirm = (
     finalDetails: BookingDetails
   ) => {
@@ -369,12 +416,14 @@ export default function App() {
     setPage("createAccount");
   };
 
-
+  // ===================================================
+  // CREATE ACCOUNT CONFIRM
+  // ===================================================
   const handleCreateAccountConfirm = () => {
     window.history.pushState(
       {
         page: "auth-card",
-        bookingDetails,
+        bookingDetails: bookingDetails,
       },
       "",
       "/auth-card"
@@ -383,11 +432,16 @@ export default function App() {
     setPage("AuthCard");
   };
 
- 
+  // ===================================================
+  // CLOSE BOOKING
+  // ===================================================
   const handleCloseBooking = () => {
     window.history.back();
   };
 
+  // ===================================================
+  // SIGN IN
+  // ===================================================
   const handleSignIn = () => {
     window.history.pushState(
       { page: "welcome" },
@@ -398,10 +452,16 @@ export default function App() {
     setPage("welcome");
   };
 
+  // ===================================================
+  // WELCOME SIGN IN
+  // ===================================================
   const handleWelcomeSignIn = () => {
     openHomePage();
   };
 
+  // ===================================================
+  // WELCOME CREATE ACCOUNT
+  // ===================================================
   const handleWelcomeCreateAccount = () => {
     window.history.pushState(
       {
@@ -414,11 +474,12 @@ export default function App() {
     setPage("accountDataCreating");
   };
 
+  // ===================================================
+  // ACCOUNT DATA BACK
+  // ===================================================
   const handleAccountDataBack = () => {
     window.history.pushState(
-      {
-        page: "welcome",
-      },
+      { page: "welcome" },
       "",
       "/welcome"
     );
@@ -426,6 +487,9 @@ export default function App() {
     setPage("welcome");
   };
 
+  // ===================================================
+  // FORGOT PASSWORD
+  // ===================================================
   const handleForgotPassword = () => {
     window.history.pushState(
       {
@@ -438,45 +502,32 @@ export default function App() {
     setPage("forgotPassword");
   };
 
-  const handleForgotPasswordBack = () => {
-    window.history.pushState(
-      {
-        page: "welcome",
-      },
-      "",
-      "/welcome"
-    );
+  // ===================================================
+  // SCROLL TO AVAILABLE
+  // ===================================================
+  useEffect(() => {
+    if (
+      page === "clinic" &&
+      showAvailable &&
+      availableSectionRef.current
+    ) {
+      setTimeout(() => {
+        availableSectionRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+    }
+  }, [page, showAvailable]);
 
-    setPage("welcome");
-  };
-
-  const handleVerifyAccount = () => {
-    window.history.pushState(
-      {
-        page: "verifyAccount",
-      },
-      "",
-      "/verify-account"
-    );
-
-    setPage("verifyAccount");
-  };
-
-  const handleCongratulations = () => {
-    window.history.pushState(
-      {
-        page: "congratulations",
-      },
-      "",
-      "/congratulations"
-    );
-
-    setPage("congratulations");
-  };
-
+  // ===================================================
+  // RENDER
+  // ===================================================
   return (
-    <div className="min-h-screen w-full">
-
+    <>
+      {/* =================================================
+          HOME
+      ================================================= */}
       {page === "home" && (
         <>
           <Navbar
@@ -487,9 +538,7 @@ export default function App() {
           <About />
 
           <ExperienceSection
-            openSkincarePage={
-              openSkincarePage
-            }
+            openSkincarePage={openSkincarePage}
           />
 
           <Effertless />
@@ -501,6 +550,9 @@ export default function App() {
         </>
       )}
 
+      {/* =================================================
+          SKINCARE
+      ================================================= */}
       {page === "skincare" && (
         <>
           <Navbar2
@@ -508,9 +560,7 @@ export default function App() {
           />
 
           <GroomingCards
-            openClinicPage={
-              openClinicPage
-            }
+            openClinicPage={openClinicPage}
           />
 
           <FacialServices />
@@ -519,6 +569,9 @@ export default function App() {
         </>
       )}
 
+      {/* =================================================
+          CLINIC
+      ================================================= */}
       {page === "clinic" && (
         <>
           <ClinicNavbar
@@ -527,20 +580,13 @@ export default function App() {
           />
 
           <Lumina
-            selectedGrooming={
-              selectedGrooming
-            }
+            selectedGrooming={selectedGrooming}
           />
 
           {showAvailable && (
-            <div
-              ref={availableSectionRef}
-              className="scroll-mt-6"
-            >
+            <div ref={availableSectionRef}>
               <Available
-                onBook={
-                  handleServiceBook
-                }
+                onBook={handleServiceBook}
               />
             </div>
           )}
@@ -551,131 +597,105 @@ export default function App() {
         </>
       )}
 
+      {/* =================================================
+          BOOKING
+      ================================================= */}
       {page === "booking" && (
-        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#FAFAFA] px-4 py-12">
-          <BookingModal
-            service={
-              selectedService || undefined
-            }
-            onClose={
-              handleCloseBooking
-            }
-            onContinue={
-              handleBookingContinue
-            }
-          />
-        </div>
+        <BookingModal
+          service={selectedService || undefined}
+          onClose={handleCloseBooking}
+          onContinue={handleBookingContinue}
+        />
       )}
 
+      {/* =================================================
+          DATE PICKER
+      ================================================= */}
       {page === "datepicker" && (
-        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#FAFAFA] px-4 py-12">
-          <DatePickerModal
-            bookingData={bookingData}
-            onClose={
-              handleCloseBooking
-            }
-            onConfirm={
-              handleDatePickerConfirm
-            }
-          />
-        </div>
+        <DatePickerModal
+          bookingData={bookingData}
+          onClose={handleCloseBooking}
+          onConfirm={handleDatePickerConfirm}
+        />
       )}
 
+      {/* =================================================
+          BOOKING DETAILS
+      ================================================= */}
       {page === "bookingDetails" && (
-        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#FAFAFA] px-4 py-12">
-          <BookingDetailsModel
-            bookingDetails={
-              bookingDetails
-            }
-            onClose={
-              handleCloseBooking
-            }
-            onConfirm={
-              handleBookingDetailsConfirm
-            }
-          />
-        </div>
+        <BookingDetailsModel
+          bookingDetails={bookingDetails}
+          onClose={handleCloseBooking}
+          onConfirm={handleBookingDetailsConfirm}
+        />
       )}
 
+      {/* =================================================
+          CREATE ACCOUNT
+      ================================================= */}
       {page === "createAccount" && (
-        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#FAFAFA] px-4 py-12">
-          <CreateAccount
-            bookingDetails={
-              bookingDetails
-            }
-            onClose={
-              handleCloseBooking
-            }
-            onConfirm={
-              handleCreateAccountConfirm
-            }
-          />
-        </div>
+        <CreateAccount
+          bookingDetails={bookingDetails}
+          onClose={handleCloseBooking}
+          onConfirm={handleCreateAccountConfirm}
+        />
       )}
+
+      {/* =================================================
+          AUTH CARD
+      ================================================= */}
       {page === "AuthCard" && (
-        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#FAFAFA] px-4 py-12">
-          <AuthCard
-            bookingDetails={
-              bookingDetails
-            }
-            onClose={
-              handleCloseBooking
-            }
-            onForgotPassword={
-              handleForgotPassword
-            }
-          />
-        </div>
+        <AuthCard
+          bookingDetails={bookingDetails}
+          onClose={handleCloseBooking}
+          onForgotPassword={handleForgotPassword}
+        />
       )}
 
+      {/* =================================================
+          WELCOME
+      ================================================= */}
       {page === "welcome" && (
-        <div className="min-h-screen w-full">
-          <Welcome
-            onCreateAccount={
-              handleWelcomeCreateAccount
-            }
-            onSignIn={
-              handleWelcomeSignIn
-            }
-            onForgotPassword={
-              handleForgotPassword
-            }
-          />
-        </div>
+        <Welcome
+          onCreateAccount={
+            handleWelcomeCreateAccount
+          }
+          onSignIn={handleWelcomeSignIn}
+          onForgotPassword={
+            handleForgotPassword
+          }
+        />
       )}
 
+      {/* =================================================
+          ACCOUNT DATA CREATING
+      ================================================= */}
       {page === "accountDataCreating" && (
-        <div className="min-h-screen w-full">
-          <AccountDatacreating
-            onBack={
-              handleAccountDataBack
-            }
-          />
-        </div>
+        <AccountDataCreatingWithBack
+          onBack={handleAccountDataBack}
+        />
       )}
 
+      {/* =================================================
+          FORGOT PASSWORD
+      ================================================= */}
       {page === "forgotPassword" && (
-        <div className="min-h-screen w-full">
-          <Magnat
-            onBack={
-              handleForgotPasswordBack
-            }
-          />
-        </div>
+        <Magnat />
       )}
 
+      {/* =================================================
+          VERIFY ACCOUNT
+      ================================================= */}
       {page === "verifyAccount" && (
-        <div className="min-h-screen w-full">
-          <Verify />
-        </div>
+        <Verify />
       )}
 
+      {/* =================================================
+          CONGRATULATIONS
+      ================================================= */}
       {page === "congratulations" && (
-        <div className="min-h-screen w-full">
-          <Congratulations />
-        </div>
+        <Congratulations />
       )}
-
-    </div>
+    </>
   );
 }

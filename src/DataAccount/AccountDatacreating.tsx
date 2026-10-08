@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
   FiUser,
@@ -14,7 +15,9 @@ interface AccountDataCreatingProps {
   onBack: () => void;
 }
 
-const AccountDataCreating = ({ onBack }: AccountDataCreatingProps) => {
+const AccountDataCreating = ({
+  onBack,
+}: AccountDataCreatingProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
@@ -51,7 +54,10 @@ const AccountDataCreating = ({ onBack }: AccountDataCreatingProps) => {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSignUp} className="space-y-3">
+          <form
+            onSubmit={handleSignUp}
+            className="space-y-3"
+          >
 
             {/* Full Name */}
             <div>
@@ -77,7 +83,7 @@ const AccountDataCreating = ({ onBack }: AccountDataCreatingProps) => {
               </label>
 
               <div className="flex h-[50px] items-center rounded-[12px] border border-[#dfe5e8] px-4">
-                <FiMail className="mr-3" />
+                <FiMail className="mr-3 text-[#8b9296]" />
 
                 <input
                   type="email"
@@ -138,7 +144,9 @@ const AccountDataCreating = ({ onBack }: AccountDataCreatingProps) => {
 
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() =>
+                    setShowPassword(!showPassword)
+                  }
                   className="cursor-pointer text-[#777]"
                 >
                   {showPassword ? (

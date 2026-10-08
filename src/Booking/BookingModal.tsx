@@ -9,20 +9,32 @@ import {
 import Calendericon from "../assets/Bookingimage/Calendericon.png";
 import clinicImage from "../assets/Bookingimage/clinic.png";
 
+// =====================================================
+// SERVICE TYPE
+// =====================================================
+
 interface Service {
-  id?: number;
+  id: number;
   title: string;
   description: string;
   price: string;
   time: string;
 }
 
+// =====================================================
+// BOOKING DATA TYPE
+// =====================================================
+
 interface BookingData {
   service: Service;
-  day: number;
+  day: string;
   period: string;
   time: string;
 }
+
+// =====================================================
+// PROPS
+// =====================================================
 
 interface BookingModalProps {
   service?: Service;
@@ -30,11 +42,19 @@ interface BookingModalProps {
   onContinue?: (data: BookingData) => void;
 }
 
+// =====================================================
+// COMPONENT
+// =====================================================
+
 function BookingModal({
   service,
   onClose,
   onContinue,
 }: BookingModalProps) {
+  // ===================================================
+  // DAYS
+  // ===================================================
+
   const days = [
     { day: "Tue", date: 12 },
     { day: "Wed", date: 13 },
@@ -46,6 +66,10 @@ function BookingModal({
     { day: "Tue", date: 19 },
   ];
 
+  // ===================================================
+  // TIME SLOTS
+  // ===================================================
+
   const timeSlots = [
     "10:00 AM",
     "10:15 AM",
@@ -56,6 +80,10 @@ function BookingModal({
     "11:30 AM",
   ];
 
+  // ===================================================
+  // STATES
+  // ===================================================
+
   const [selectedPeriod, setSelectedPeriod] =
     useState("Morning");
 
@@ -65,7 +93,12 @@ function BookingModal({
   const [selectedTime, setSelectedTime] =
     useState("10:00 AM");
 
+  // ===================================================
+  // SELECTED SERVICE
+  // ===================================================
+
   const selectedService: Service = service || {
+    id: 1,
     title: "Relaxation Face Massage",
     description:
       "Improves circulation and relieves facial tension",
@@ -73,10 +106,14 @@ function BookingModal({
     time: "60 min",
   };
 
+  // ===================================================
+  // CONTINUE
+  // ===================================================
+
   const handleContinue = () => {
     const bookingData: BookingData = {
       service: selectedService,
-      day: selectedDay,
+      day: String(selectedDay),
       period: selectedPeriod,
       time: selectedTime,
     };
@@ -85,6 +122,10 @@ function BookingModal({
       onContinue(bookingData);
     }
   };
+
+  // ===================================================
+  // UI
+  // ===================================================
 
   return (
     <div
@@ -248,13 +289,12 @@ function BookingModal({
           </h2>
         </div>
 
-        {/* Morning / Afternoon / Evening */}
+        {/* Period Selector */}
         <div
           className="
             mx-auto
             mt-5
             flex
-            cursor-pointer
             max-w-sm
             justify-between
             rounded-xl
@@ -467,11 +507,11 @@ function BookingModal({
                     setSelectedTime(time)
                   }
                   className={`
+                    cursor-pointer
                     whitespace-nowrap
                     rounded-lg
                     px-4
                     py-2
-                    cursor-pointer
                     text-xs
                     font-semibold
                     tracking-wide

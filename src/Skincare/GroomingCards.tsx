@@ -6,7 +6,11 @@ import grooming3 from "../assets/Skincare/Grooming-3.jpg";
 import grooming4 from "../assets/Skincare/Grooming-4.jpg";
 import grooming5 from "../assets/Skincare/Grooming-5.jpg";
 
-interface GroomingCard {
+// =====================================================
+// GROOMING CARD TYPE
+// =====================================================
+
+export interface GroomingCard {
   id: number;
   image: string;
   title: string;
@@ -16,9 +20,17 @@ interface GroomingCard {
   reviews: string;
 }
 
+// =====================================================
+// PROPS
+// =====================================================
+
 interface GroomingCardsProps {
   openClinicPage: (card: GroomingCard) => void;
 }
+
+// =====================================================
+// GROOMING CARDS DATA
+// =====================================================
 
 const cards: GroomingCard[] = [
   {
@@ -68,10 +80,18 @@ const cards: GroomingCard[] = [
   },
 ];
 
+// =====================================================
+// GROOMING CARDS COMPONENT
+// =====================================================
+
 export default function GroomingCards({
   openClinicPage,
 }: GroomingCardsProps) {
   const sliderRef = useRef<HTMLDivElement | null>(null);
+
+  // ===================================================
+  // SCROLL LEFT
+  // ===================================================
 
   const scrollLeft = () => {
     sliderRef.current?.scrollBy({
@@ -80,6 +100,10 @@ export default function GroomingCards({
     });
   };
 
+  // ===================================================
+  // SCROLL RIGHT
+  // ===================================================
+
   const scrollRight = () => {
     sliderRef.current?.scrollBy({
       left: 285,
@@ -87,9 +111,12 @@ export default function GroomingCards({
     });
   };
 
+  // ===================================================
+  // UI
+  // ===================================================
+
   return (
     <section className="py-20 lg:py-45">
-
       {/* Heading */}
       <p
         className="
@@ -107,10 +134,8 @@ export default function GroomingCards({
         Skin Care Salon for Los Angeles, CA - Book Hair Stylist Near you (65)
       </p>
 
-      {/* Slider Wrapper */}
+      {/* Cards Container */}
       <div className="relative mt-[38px]">
-
-        {/* Cards Container */}
         <div
           ref={sliderRef}
           className="
@@ -118,19 +143,15 @@ export default function GroomingCards({
             grid-cols-1
             gap-4
             px-4
-
             sm:grid-cols-2
             sm:gap-4
             sm:px-6
-
             md:px-10
-
             lg:flex
             lg:gap-[13px]
             lg:overflow-x-auto
             lg:px-[60px]
             lg:pb-2
-
             [-ms-overflow-style:none]
             [scrollbar-width:none]
             [&::-webkit-scrollbar]:hidden
@@ -141,6 +162,7 @@ export default function GroomingCards({
               key={card.id}
               onClick={() => openClinicPage(card)}
               className="
+                h-[500px]
                 w-full
                 cursor-pointer
                 overflow-hidden
@@ -148,31 +170,23 @@ export default function GroomingCards({
                 border
                 border-[#00000010]
                 bg-[#e8edf1]
-
                 transition
                 duration-300
                 hover:scale-[1.02]
-
-                h-[500px]
-
                 sm:h-[480px]
-
                 lg:h-[410px]
                 lg:min-w-[270px]
                 lg:max-w-[270px]
                 lg:shrink-0
               "
             >
-
               {/* Image */}
               <div
                 className="
                   h-[240px]
                   overflow-hidden
                   rounded-lg
-
                   sm:h-[280px]
-
                   lg:h-[222px]
                 "
               >
@@ -190,12 +204,10 @@ export default function GroomingCards({
                 />
               </div>
 
-              {/* Content */}
+              {/* Card Content */}
               <div className="px-3 pb-4 pt-3">
-
                 {/* Title + Favorite */}
                 <div className="flex items-center justify-between gap-3">
-
                   <h2
                     className="
                       truncate
@@ -208,7 +220,6 @@ export default function GroomingCards({
                     {card.title}
                   </h2>
 
-                  {/* Favorite Button */}
                   <button
                     type="button"
                     onClick={(e) => e.stopPropagation()}
@@ -298,7 +309,10 @@ export default function GroomingCards({
           ))}
         </div>
 
-        {/* LEFT BUTTON */}
+        {/* =================================================
+            LEFT BUTTON
+        ================================================= */}
+
         <button
           type="button"
           onClick={scrollLeft}
@@ -336,7 +350,10 @@ export default function GroomingCards({
           </svg>
         </button>
 
-        {/* RIGHT BUTTON */}
+        {/* =================================================
+            RIGHT BUTTON
+        ================================================= */}
+
         <button
           type="button"
           onClick={scrollRight}

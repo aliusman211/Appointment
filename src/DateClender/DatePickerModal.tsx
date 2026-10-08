@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiX } from "react-icons/fi";
-import Calendericon from "../assets/Bookingimage/Calendericon.png";
+import calendericon from "../assets/Bookingimage/calendericon.png";
 interface Service {
   id: number;
   title: string;
@@ -91,7 +91,7 @@ export default function DatePickerModal({ bookingData, onClose, onConfirm }: Dat
         >
           <img
             className="h-[20px] w-[20px]"
-            src={Calendericon}
+            src={calendericon}
             alt="Calendar"
           />
 
