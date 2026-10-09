@@ -14,9 +14,7 @@ import Icon6 from "../assets/signInimages/Icon (6).png";
 import Icon7 from "../assets/signInimages/Icon (7).png";
 
 import Icon8 from "../assets/signInimages/icon (8).png";
-
-
-import Icon9 from "../assets/signInimages/Icon (9).png";
+import Icon9 from "../assets/signInimages/icon (9).png";
 
 import Group3 from "../assets/signInimages/Group 3.png";
 
