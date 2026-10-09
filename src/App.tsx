@@ -524,6 +524,8 @@ export default function App() {
   // RENDER
   // ===================================================
   return (
+    <div className="flex min-h-screen w-full flex-col overflow-x-hidden">
+      <div className="mx-auto w-full max-w-[1400px] min-w-0 overflow-x-hidden">
     <>
       {/* =================================================
           HOME
@@ -697,5 +699,7 @@ export default function App() {
         <Congratulations />
       )}
     </>
+    </div>
+    </div>
   );
 }

@@ -57,7 +57,7 @@ const Navbar = ({ open, onSignIn }: NavbarProps) => {
 
   return (
     <>
-      <nav className="fixed left-0 top-0 z-[9999] w-full px-3 py-6 sm:px-4 sm:py-3 md:px-6">
+      <nav className="fixed left-0 top-0  z-[9999] w-full px-3 py-6 sm:px-4 sm:py-3 md:px-6">
         <div
           className={`mx-auto flex h-[56px] w-full max-w-[1200px] items-center justify-between gap-2 rounded-[16px] border border-white/10 px-3 transition-all duration-500 sm:h-[60px] sm:rounded-[20px] sm:px-4 md:px-6 ${
             isScrolled
